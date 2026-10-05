@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  /* Legacy names kept so existing classes (font-poppins, font-display) keep working */
+  --font-poppins: var(--font-sans);
+  --font-display: var(--font-sans);
+
+  /* ZarinCare brand violet. Remapping purple-* re-themes every existing purple class
+     (#7C3AED primary, #6D28D9 hover). Secondary medical accent = Tailwind cyan-500 (#06B6D4). */
+  --color-purple-50: #f5f3ff;
+  --color-purple-100: #ede9fe;
+  --color-purple-200: #ddd6fe;
+  --color-purple-300: #c4b5fd;
+  --color-purple-400: #a78bfa;
+  --color-purple-500: #8b5cf6;
+  --color-purple-600: #7c3aed;
+  --color-purple-700: #6d28d9;
+  --color-purple-800: #5b21b6;
+  --color-purple-900: #4c1d95;
+  --color-purple-950: #2e1065;
+}
+
+:root {
+  font-family: var(--font-sans);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  @apply bg-white text-slate-800 dark:bg-gray-950 dark:text-white text-sm font-sans antialiased;
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button { @apply cursor-pointer; }
+* { box-sizing: border-box; }
+
+::selection { background: #7c3aed; color: white; }
+
+/* Visible keyboard focus for links, buttons and tabs (inputs keep their own ring) */
+:where(a, button, [role="tab"], [role="switch"], summary):focus-visible {
+  outline: 2px solid var(--color-purple-500);
+  outline-offset: 2px;
+}
+
+/* Entrance animation: opacity + transform only. Stagger with style={{ "--d": "120ms" }} */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+.anim-rise { animation: rise 800ms cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0ms) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.prebuilt-grid {
+  background-image:
+    linear-gradient(rgba(15, 23, 42, .035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, .035) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.dark .prebuilt-grid {
+  background-image:
+    linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+}
+
+.theme-card {
+  @apply rounded-xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-800/20;
+}
+
+.theme-muted {
+  @apply text-slate-500 dark:text-slate-300;
+}
